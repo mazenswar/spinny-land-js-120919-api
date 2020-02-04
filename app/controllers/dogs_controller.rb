@@ -9,11 +9,13 @@ class DogsController < ApplicationController
     end
 
     def create
-        render json: Dog.create(dog_params), include: :nicknames
+        dog = Dog.create(dog_params)
+        render json: dog, include: :nicknames
     end
 
     def update
-        dog = Dog.find(params[:id]).update(dog_params)
+        dog = Dog.find(params[:id])
+        dog.update(dog_params)
         render json: dog, include: :nicknames
     end
 
@@ -26,6 +28,6 @@ class DogsController < ApplicationController
     private
 
     def dog_params
-        params.permit(:name, :description, :img)
+        params.permit(:mood, :img)
     end
 end
